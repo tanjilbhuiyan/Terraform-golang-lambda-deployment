@@ -2,7 +2,7 @@
 resource "terraform_data" "install_golang" {
   # Run the build script
   provisioner "local-exec" {
-    command = "wget https://go.dev/dl/go1.21.1.linux-amd64.tar.gz && tar -xvzf go1.21.1.linux-amd64.tar.gz && ~/go/bin/go version"
+    command = "wget https://go.dev/dl/go1.21.1.linux-amd64.tar.gz && tar -xvzf go1.21.1.linux-amd64.tar.gz && go/bin/go version"
   }
   #   provisioner "local-exec" {
   #     command = "cd src && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ../bin/handler && cd ../bin && zip handler.zip handler"
