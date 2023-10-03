@@ -4,7 +4,6 @@ data "archive_file" "lambda_go_zip" {
   output_path = "${path.module}/bin/handler.zip"
 }
 
-# Build Golang lambda
 
 # Lambda module to deploy using terraform
 module "lambda_function" {
