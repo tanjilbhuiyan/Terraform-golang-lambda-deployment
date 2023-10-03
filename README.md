@@ -1,1 +1,1 @@
-# golang-lambda-terraform
+This is a POC project.
