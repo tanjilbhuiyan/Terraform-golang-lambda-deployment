@@ -12,7 +12,7 @@ module "lambda_function" {
 
   function_name = "tf-cloud-golang-lambda"
   description   = "This lambda is being deployed from tf-cloud"
-  handler       = "lambda_function.handler"
+  handler       = "lambda_function.bootstrap"
   runtime       = "provided.al2"
 
   create_package         = false
