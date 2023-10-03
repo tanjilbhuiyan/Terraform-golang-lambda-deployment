@@ -5,7 +5,7 @@ resource "terraform_data" "install_golang" {
     command = "wget https://go.dev/dl/go1.21.1.linux-amd64.tar.gz && tar -xvzf go1.21.1.linux-amd64.tar.gz && go/bin/go version"
   }
   provisioner "local-exec" {
-    command = "cd lambda/src && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 ../../go/bin/go build -o ../bin/handler && cd ../bin && zip handler.zip handler"
+    command = "cd lambda/src && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 ../../go/bin/go build -o handler && zip handler.zip handler"
   }
 }
 
@@ -21,7 +21,7 @@ module "lambda_function" {
   runtime       = "provided.al2"
 
   create_package         = false
-  local_existing_package = "../bin/handler.zip"
+  local_existing_package = "${path.module}/src/handler.zip"
 
   depends_on = [terraform_data.install_golang]
 }
