@@ -14,6 +14,7 @@ module "lambda_function" {
   description   = "This lambda is being deployed from tf-cloud"
   handler       = "bootstrap"
   runtime       = "provided.al2"
+  architectures = ["arm64"]
 
   create_package         = false
   local_existing_package = "${path.module}/bin/handler.zip"
