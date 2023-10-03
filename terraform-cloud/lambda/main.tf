@@ -9,20 +9,20 @@ resource "terraform_data" "install_golang" {
   }
 }
 
-# # Build Golang lambda
+# Build Golang lambda
 
-# # Lambda module to deploy using terraform
-# module "lambda_function" {
-#   source = "terraform-aws-modules/lambda/aws"
+# Lambda module to deploy using terraform
+module "lambda_function" {
+  source = "terraform-aws-modules/lambda/aws"
 
-#   function_name = "tf-cloud-golang-lambda"
-#   description   = "This lambda is being deployed from tf-cloud"
-#   handler       = "lambda_function.handler"
-#   runtime       = "provided.al2"
+  function_name = "tf-cloud-golang-lambda"
+  description   = "This lambda is being deployed from tf-cloud"
+  handler       = "lambda_function.handler"
+  runtime       = "provided.al2"
 
-#   create_package         = false
-#   local_existing_package = "../bin/handler.zip"
+  create_package         = false
+  local_existing_package = "../bin/handler.zip"
 
-#   depends_on = [terraform_data.install_golang]
-# }
+  depends_on = [terraform_data.install_golang]
+}
 
