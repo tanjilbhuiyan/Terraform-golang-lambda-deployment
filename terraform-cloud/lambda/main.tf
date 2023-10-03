@@ -1,12 +1,7 @@
-# Create a local directory to build and store the ZIP file
-resource "terraform_data" "install_golang" {
-  # Run the build script
-  provisioner "local-exec" {
-    command = "wget https://go.dev/dl/go1.21.1.linux-amd64.tar.gz && tar -xvzf go1.21.1.linux-amd64.tar.gz && go/bin/go version"
-  }
-  provisioner "local-exec" {
-    command = "cd lambda/src && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 ../../go/bin/go build -o handler && zip handler.zip handler"
-  }
+data "archive_file" "lambda_go_zip" {
+  type        = "zip"
+  source_file = "${path.module}/bin/handler"
+  output_path = "${path.module}/bin/handler.zip"
 }
 
 # Build Golang lambda
@@ -21,8 +16,7 @@ module "lambda_function" {
   runtime       = "provided.al2"
 
   create_package         = false
-  local_existing_package = "${path.module}/src/handler.zip"
+  local_existing_package = "${path.module}/bin/handler.zip"
 
-  depends_on = [terraform_data.install_golang]
 }
 
