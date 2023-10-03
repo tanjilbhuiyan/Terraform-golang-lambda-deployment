@@ -12,13 +12,14 @@ resource "null_resource" "trigger_golang_lambda" {
   count = data.external.check_file_change.result != "" ? 1 : 0
 
   triggers = {
-    source_file_change = data.external.check_file_change.result
+    source_file_change = data.external.check_file_change.result["timestamp"]
   }
 
   # Run the Lambda module when the file changes
   provisioner "local-exec" {
-    command = "echo File changed; terraform apply -target=module.golang-lambda"
+    command = "echo File changed; terraform plan -target=module.golang-lambda && terraform apply -target=module.golang-lambda"
   }
+
 }
 
 # Lambda
