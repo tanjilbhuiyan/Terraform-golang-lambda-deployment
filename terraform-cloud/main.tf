@@ -3,8 +3,9 @@ provider "aws" {}
 
 # Check if the source file has changed
 data "external" "check_file_change" {
-  program = ["sh", "-c", "stat -c %Y lambda/src/main.go"]
+  program = ["sh", "-c", "stat -c '{\"timestamp\":\"%Y\"}' lambda/src/main.go"]
 }
+
 
 # Conditional execution based on file change
 resource "null_resource" "trigger_golang_lambda" {
