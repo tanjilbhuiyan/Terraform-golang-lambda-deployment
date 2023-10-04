@@ -99,7 +99,8 @@ resource "aws_lambda_function" "test_lambda" {
   handler       = "bootstrap"
 
   # source_code_hash = filebase64sha256("${path.module}/src/main.go")
-  runtime       = "provided.al2"
-  architectures = ["arm64"]
+  source_code_hash = filemd5("${path.module}/src/main.go")
+  runtime          = "provided.al2"
+  architectures    = ["arm64"]
 }
 
