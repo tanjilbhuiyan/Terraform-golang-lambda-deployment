@@ -30,7 +30,7 @@ jobs:
             go-version: '>=1.17.0'
     - name: Setting up change file detection action
       id: changed-files-specific
-      uses: tj-actions/changed-files@v35
+      uses: tj-actions/changed-files@v39.2.1
       with:
         base_sha: ${{ steps.get-base-sha.outputs.base_sha }}
         files: |
