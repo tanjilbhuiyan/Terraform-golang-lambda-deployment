@@ -1,17 +1,18 @@
 package main
 
 import (
-    "context"
-    "fmt"
-    "github.com/aws/aws-lambda-go/lambda"
+	"context"
+	"fmt"
+
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
 func handler(ctx context.Context) (string, error) {
-    message := "Hello, World! tf-cloud-golang-lambda-using-github"
-    fmt.Println(message)
-    return message, nil
+	message := "Hello, World! tf-cloud-golang"
+	fmt.Println(message)
+	return message, nil
 }
 
 func main() {
-    lambda.Start(handler)
+	lambda.Start(handler)
 }

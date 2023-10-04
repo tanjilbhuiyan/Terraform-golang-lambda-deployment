@@ -61,8 +61,7 @@ module "lambda_function" {
     key    = "handler.zip"
   }
 
-  ignore_source_code_hash = false
-
-  depends_on = [aws_s3_bucket.builds]
+  source_code_hash = data.archive_file.lambda_go_zip.output_base64sha256
+  depends_on       = [aws_s3_bucket.builds]
 }
 
