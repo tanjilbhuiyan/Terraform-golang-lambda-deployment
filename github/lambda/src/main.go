@@ -8,7 +8,7 @@ import (
 )
 
 func handler(ctx context.Context) (string, error) {
-	message := "Hello, World! tf-cloud-golang"
+	message := "Hello, World! tf-cloud-golang test new"
 	fmt.Println(message)
 	return message, nil
 }
