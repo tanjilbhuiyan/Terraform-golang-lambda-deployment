@@ -101,5 +101,4 @@ resource "aws_lambda_function" "test_lambda" {
   source_code_hash = filebase64sha256("${path.module}/src/main.go")
   runtime          = "provided.al2"
   architectures    = ["arm64"]
-
 }
