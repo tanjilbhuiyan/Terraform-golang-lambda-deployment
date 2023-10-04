@@ -8,7 +8,7 @@ module "lambda_function" {
   source = "terraform-aws-modules/lambda/aws"
 
   function_name = "tf-cloud-golang-lambda-using-github"
-  description   = "This lambda is being deployed from tf-cloud"
+  description   = "This lambda is being deployed from github"
   handler       = "bootstrap"
   runtime       = "provided.al2"
   architectures = ["arm64"]
