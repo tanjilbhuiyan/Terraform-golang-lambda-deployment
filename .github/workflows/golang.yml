@@ -3,9 +3,6 @@ name: 'Golang Lambda Build and Deployment with S3'
 on:
   push:
     branches: [ main ]
-    paths-ignore:
-      - '.github/**'
-      - 'terraform-cloud'
     paths:
       - 'github/**'
 
