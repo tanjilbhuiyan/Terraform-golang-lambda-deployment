@@ -28,9 +28,21 @@ jobs:
       uses: actions/setup-go@v3
       with:
             go-version: '>=1.17.0'
-    - name: Build Golang Lambda
-      id: build_go_lambda
-      run: ls -la && pwd && find lambda/ -name 'main.go' -execdir sh -c 'GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o ../bin/bootstrap' {} \;
+    - name: Setting up change file detection action
+      id: changed-files-specific
+      uses: tj-actions/changed-files@v35
+      with:
+        base_sha: ${{ steps.get-base-sha.outputs.base_sha }}
+        files: |
+          github/**/*.go
+        json: "true"
+
+    - name: Run step if any file(s) in the integration folder change
+      if: steps.changed-files-specific.outputs.any_changed == 'true'
+      run: |
+        echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
+        echo "${{ steps.changed-files-specific.outputs.all_changed_files }}" > list.txt
+        cat list.txt
 
     - name: Setup Terraform
       id: Setting_up_terraform
