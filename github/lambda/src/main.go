@@ -8,7 +8,7 @@ import (
 )
 
 func handler(ctx context.Context) (string, error) {
-	message := "Hello, World! Test 1 "
+	message := "Hello, World! Testing s3"
 	fmt.Println(message)
 	return message, nil
 }
