@@ -53,7 +53,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "builds" {
     status = "Enabled"
 
     noncurrent_version_expiration {
-      days = 10 # Expire noncurrent versions after 90 days
+      noncurrent_days = 10 # Expire noncurrent versions after 90 days
     }
 
     filter {
