@@ -65,3 +65,4 @@ module "lambda_function" {
 
   depends_on = [aws_s3_bucket.builds]
 }
+
