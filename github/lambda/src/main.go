@@ -7,7 +7,7 @@ import (
 )
 
 func handler(ctx context.Context) (string, error) {
-    message := "Hello, World!"
+    message := "Hello, World! tf-cloud-golang-lambda-using-github"
     fmt.Println(message)
     return message, nil
 }
