@@ -27,19 +27,21 @@ data "archive_file" "lambda_go_zip" {
 # }
 
 
-locals {
-  my_function_source = "${path.module}/bin/bootstrap"
-}
-
 resource "aws_s3_bucket" "builds" {
   bucket = "my-builds-for-golang-lambda-test"
-  acl    = "private"
+}
+resource "aws_s3_bucket_ownership_controls" "builds" {
+  bucket = aws_s3_bucket.builds.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
 }
 
-resource "aws_s3_object" "my_function" {
+resource "aws_s3_bucket_acl" "builds" {
+  depends_on = [aws_s3_bucket_ownership_controls.builds]
+
   bucket = aws_s3_bucket.builds.id
-  key    = "${filemd5(local.my_function_source)}.zip"
-  source = local.my_function_source
+  acl    = "private"
 }
 
 # Download package from S3 
@@ -54,11 +56,9 @@ module "lambda_function" {
   runtime       = "provided.al2"
   architectures = ["arm64"]
 
-  create_package = false
-  s3_existing_package = {
-    bucket = aws_s3_bucket.builds.id
-    key    = aws_s3_object.my_function.id
-  }
+  store_on_s3 = true
+  s3_bucket   = "my-builds-for-golang-lambda-test"
+  source_path = "../handler.zip"
 
 
 }
