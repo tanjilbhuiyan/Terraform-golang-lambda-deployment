@@ -5,6 +5,9 @@ on:
     branches: [ main ]
     paths:
       - 'github/**'
+defaults:
+    run:
+     working-directory: github
 
 jobs:
   Golang-lambda-build:
@@ -26,7 +29,7 @@ jobs:
             go-version: '>=1.17.0'
     - name: Build Golang Lambda
       id: build_go_lambda
-      run: ls -la && pwd && find github/lambda/ -name 'main.go' -execdir sh -c 'GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o ../bin/handler' {} \;
+      run: ls -la && pwd && find lambda/ -name 'main.go' -execdir sh -c 'GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o ../bin/handler' {} \;
 
     - name: Setup Terraform
       id: Setting_up_terraform
