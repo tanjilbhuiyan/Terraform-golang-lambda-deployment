@@ -1,3 +1,10 @@
+# Zip the build file
+data "archive_file" "lambda_go_zip" {
+  type        = "zip"
+  source_file = "${path.module}/bin/bootstrap"
+  output_path = "${path.module}/bin/handler.zip"
+}
+
 # Build and upload package to S3
 
 
