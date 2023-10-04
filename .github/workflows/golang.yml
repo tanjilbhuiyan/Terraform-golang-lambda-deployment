@@ -1,0 +1,57 @@
+name: 'Golang Lambda Build and Deployment with S3'
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '.github/**'
+      - 'terraform-cloud'
+    paths:
+      - 'github/**'
+
+jobs:
+  Golang-lambda-build:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+
+    steps:
+    - name: Checkout
+      id: checkout_source_code
+      uses: actions/checkout@v3
+      with:
+        ref: main
+    - name: Setup Golang
+      id: setup_golang
+      uses: actions/setup-go@v3
+      with:
+            go-version: '>=1.17.0'
+    - name: Build Golang Lambda
+      id: build_go_lambda
+      run: find lambda/ -name 'main.go' -execdir sh -c 'GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o ../bin/handler' {} \;
+
+    - name: Setup Terraform
+      id: Setting_up_terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+    - name: Adding workspace configuration in provider.tf
+      id: Adding_workspace_configuration
+      run: |
+          echo "$TF_WORKSPACE" >> main.tf
+      env:
+        TF_WORKSPACE: ${{ vars.TF_WORKSPACE }}
+
+    - name: Terraform Init
+      id: Terraform_init
+      run: terraform init
+
+    - name: Terraform Plan
+      id: Terraform_plan
+      run: terraform plan -input=false -out=golang.tfplan
+
+    - name: Terraform Apply
+      id: Terraform_apply
+      run: terraform apply -auto-approve -input=false "golang.tfplan"

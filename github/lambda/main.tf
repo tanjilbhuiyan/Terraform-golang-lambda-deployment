@@ -5,14 +5,15 @@
 
 # Lambda module to deploy using terraform
 module "lambda_function" {
-    source = "terraform-aws-modules/lambda/aws"
+  source = "terraform-aws-modules/lambda/aws"
 
-    function_name = "my-lambda-existing-package-local"
-    description   = "My awesome lambda function"
-    handler       = "lambda_function.handler"
-    runtime       = "provided.al2"
+  function_name = "tf-cloud-golang-lambda-using-github"
+  description   = "This lambda is being deployed from tf-cloud"
+  handler       = "bootstrap"
+  runtime       = "provided.al2"
+  architectures = ["arm64"]
 
-    create_package         = false
-    local_existing_package = "../existing_package.zip"
+  create_package         = false
+  local_existing_package = "${path.module}/bin/handler.zip"
+
 }
-
