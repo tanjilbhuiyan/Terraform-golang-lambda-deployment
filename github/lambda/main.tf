@@ -50,14 +50,16 @@ resource "aws_s3_bucket_acl" "builds" {
 module "lambda_function" {
   source = "terraform-aws-modules/lambda/aws"
 
-  function_name = "tf-cloud-golang-lambda-using-github"
-  description   = "This lambda is being deployed from github"
-  handler       = "bootstrap"
-  runtime       = "provided.al2"
-  architectures = ["arm64"]
-
-  s3_bucket = aws_s3_bucket.builds.bucket
-  s3_key    = "handler.zip"
+  function_name  = "tf-cloud-golang-lambda-using-github"
+  description    = "This lambda is being deployed from github"
+  handler        = "bootstrap"
+  runtime        = "provided.al2"
+  architectures  = ["arm64"]
+  create_package = false
+  s3_existing_package = {
+    bucket = aws_s3_bucket.builds.id
+    key    = "handler.zip"
+  }
 
   depends_on = [aws_s3_bucket.builds]
 }
