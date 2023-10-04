@@ -89,6 +89,10 @@ data "archive_file" "lambda_go_zip" {
   source_file = "${path.module}/bin/bootstrap"
   output_path = "${path.module}/bin/handler.zip"
 }
+data "aws_s3_object" "application_zip" {
+  bucket = "my-builds-for-golang-lambda-test"
+  key    = "handler.zip"
+}
 
 resource "aws_lambda_function" "test_lambda" {
   # If the file is not in the current working directory you will need to include a
@@ -100,7 +104,7 @@ resource "aws_lambda_function" "test_lambda" {
   s3_bucket     = "my-builds-for-golang-lambda-test"
   s3_key        = "handler.zip"
 
-  source_code_hash = filebase64sha256("handler.zip")
-  runtime          = "provided.al2"
-  architectures    = ["arm64"]
+  s3_object_version = data.aws_s3_object.application_zip.version_id
+  runtime           = "provided.al2"
+  architectures     = ["arm64"]
 }
