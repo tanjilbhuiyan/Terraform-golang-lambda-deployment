@@ -43,6 +43,24 @@ resource "aws_s3_bucket_acl" "builds" {
   bucket = aws_s3_bucket.builds.id
   acl    = "private"
 }
+# lifecycle rule for bucket
+
+resource "aws_s3_bucket_lifecycle_configuration" "builds" {
+  bucket = aws_s3_bucket.builds.id
+
+  rule {
+    id     = "previous-versions-rule"
+    status = "Enabled"
+
+    noncurrent_version_expiration {
+      days = 10 # Expire noncurrent versions after 90 days
+    }
+
+    filter {
+      prefix = "" # Empty prefix to match all objects in the bucket
+    }
+  }
+}
 
 # Download package from S3 
 data "aws_s3_object" "application_zip" {
