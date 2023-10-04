@@ -93,13 +93,14 @@ data "archive_file" "lambda_go_zip" {
 resource "aws_lambda_function" "test_lambda" {
   # If the file is not in the current working directory you will need to include a
   # path.module in the filename.
-  filename      = "${path.module}/bin/handler.zip"
+  # filename      = "${path.module}/bin/handler.zip"
   function_name = "tf-cloud-golang-lambda-using-github"
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "bootstrap"
+  s3_bucket     = "my-builds-for-golang-lambda-test"
+  s3_key        = "handler.zip"
 
-  # source_code_hash = filebase64sha256("${path.module}/src/main.go")
-  source_code_hash = filemd5("${path.module}/src/main.go")
+  source_code_hash = filebase64sha256("handler.zip")
   runtime          = "provided.al2"
   architectures    = ["arm64"]
 }
