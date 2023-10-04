@@ -102,3 +102,5 @@ resource "aws_lambda_function" "test_lambda" {
   runtime          = "provided.al2"
   architectures    = ["arm64"]
 }
+
+#
