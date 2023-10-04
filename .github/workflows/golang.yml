@@ -20,9 +20,10 @@ jobs:
     steps:
     - name: Checkout
       id: checkout_source_code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: main
+        fetch-depth: 0
     - name: Setup Golang
       id: setup_golang
       uses: actions/setup-go@v3
