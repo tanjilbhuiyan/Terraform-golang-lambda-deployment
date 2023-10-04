@@ -56,9 +56,8 @@ module "lambda_function" {
   runtime       = "provided.al2"
   architectures = ["arm64"]
 
-  store_on_s3 = true
-  s3_bucket   = "my-builds-for-golang-lambda-test"
-  source_path = "../handler.zip"
+  s3_bucket = aws_s3_bucket.builds.bucket
+  s3_key    = "handler.zip"
 
-
+  depends_on = [aws_s3_bucket.builds]
 }
