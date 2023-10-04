@@ -61,5 +61,7 @@ module "lambda_function" {
     key    = "handler.zip"
   }
 
+  ignore_source_code_hash = false
+
   depends_on = [aws_s3_bucket.builds]
 }
