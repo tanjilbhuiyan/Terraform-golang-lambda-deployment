@@ -29,6 +29,10 @@ jobs:
       uses: actions/setup-go@v3
       with:
             go-version: '>=1.17.0'
+
+    - name: action-zip
+      uses: montudor/action-zip@v1.0.0
+  
     - name: Setting up change file detection action
       id: changed-files-specific
       uses: tj-actions/changed-files@v39.2.1
@@ -47,8 +51,7 @@ jobs:
         ls -la
         cat list.txt
         cp ../.github/scripts/golang-build-deploy.sh .
-        chmod +x golang-build-deploy.sh
-        ./golang-build-deploy.sh
+        bash golang-build-deploy.sh
 
     - name: Setup Terraform
       id: Setting_up_terraform
