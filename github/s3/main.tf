@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "builds" {
-  bucket = "golang-lambda-test"
+  bucket = "my-unique-bucket-golang-lambda-test"
 }
 resource "aws_s3_bucket_ownership_controls" "builds" {
   bucket = aws_s3_bucket.builds.id
