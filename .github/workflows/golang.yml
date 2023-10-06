@@ -45,6 +45,7 @@ jobs:
         echo "${{ steps.changed-files-specific.outputs.all_changed_files }}" > list.txt
         pwd
         ls -la
+        
 
     - name: Setup Terraform
       id: Setting_up_terraform
