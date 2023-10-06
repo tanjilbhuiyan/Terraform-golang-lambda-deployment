@@ -45,7 +45,8 @@ jobs:
         echo "${{ steps.changed-files-specific.outputs.all_changed_files }}" > list.txt
         pwd
         ls -la
-        
+        cp ../.github/scripts/golang-build-deploy.sh .
+        bash golang-build-deploy.sh
 
     - name: Setup Terraform
       id: Setting_up_terraform
