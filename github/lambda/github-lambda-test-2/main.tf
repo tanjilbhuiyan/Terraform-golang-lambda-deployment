@@ -51,6 +51,4 @@ module "lambda_function" {
     version_id = data.aws_s3_object.application_zip.version_id
   }
 
-
-  depends_on = [aws_s3_bucket.builds]
 }
