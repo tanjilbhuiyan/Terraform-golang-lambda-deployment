@@ -15,3 +15,4 @@ module "golang-lambda-bucket" {
 provider "aws" {}
 
 
+
