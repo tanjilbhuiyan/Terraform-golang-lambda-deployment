@@ -17,18 +17,18 @@ while read line; do
     printf '%s\n' "$directory_path"
 
     # Extract the path without the filename and the initial 'lambda/' part
-    zip_name=$(dirname "$directory_path" | sed 's|^lambda/||')
+    file_path=$(dirname "$directory_path" | sed 's|^lambda/||')
 
     # Determine if the last segment is 'src' or not
-    last_segment=$(basename "$zip_name")
+    last_segment=$(basename "$file_path")
 
     if [ "$last_segment" = "src" ]; then
       # Remove the last segment if it is 'src'
-      zip_name =$(dirname "$zip_name")
+      file_path =$(dirname "$file_path")
     fi
 
     # Replace '/' with '_'
-    result=$(echo "$zip_name" | tr '/' '_')
+    zip_name=$(echo "$file_path" | tr '/' '_')
 
     printf '%s\n' "$result"
 
@@ -52,12 +52,12 @@ while read line; do
             echo "Build in directory $directory_path succeeded:"
             echo "$build_output"
             # Zip the bootstrap file
-            zip -q "$result.zip" bootstrap
+            zip -q "$zip_name.zip" bootstrap
             ls -la
             pwd
             echo "Bootstrap file zipped as bootstrap.zip"
             echo "Uploading to AWS S3"
-            aws s3 cp "$result.zip" "s3://$S3_BUCKET_NAME/$result.zip"
+            aws s3 cp "$zip_name.zip" "s3://$S3_BUCKET_NAME/$zip_name.zip"
 
         else
             echo "Build in directory $directory_path failed:"

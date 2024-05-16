@@ -10,6 +10,12 @@ module "golang-lambda-2" {
   s3_bucket = module.golang-lambda-bucket.s3-bucket-function_name
 
 }
+module "payments_gateways_stripe_confirm" {
+  source    = "./lambda/payments/gateways/stripe/confirm"
+  s3_bucket = module.golang-lambda-bucket.s3-bucket-function_name
+
+}
+
 
 # Define module for golang-lambda-bucket
 module "golang-lambda-bucket" {
