@@ -1,0 +1,1 @@
+["lambda/github-lambda-test-1/src/main.go","lambda/github-lambda-test-2/src/main.go"]
