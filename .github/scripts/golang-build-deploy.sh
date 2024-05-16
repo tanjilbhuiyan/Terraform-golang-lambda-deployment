@@ -30,7 +30,7 @@ while read line; do
     # Replace '/' with '_'
     zip_name=$(echo "$file_path" | tr '/' '_')
 
-    printf '%s\n' "$result"
+    printf '%s\n' "$zip_name"
 
 
       # Check if the directory exists
