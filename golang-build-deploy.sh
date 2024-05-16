@@ -30,7 +30,7 @@ while read line; do
     # Replace '/' with '_'
     result=$(echo "$zip_name" | tr '/' '_')
 
-    echo "$result"
+    printf '%s\n' "$result"
 
 
       # Check if the directory exists
@@ -53,6 +53,8 @@ while read line; do
             echo "$build_output"
             # Zip the bootstrap file
             zip -q "$result.zip" bootstrap
+            ls -la
+            pwd
             echo "Bootstrap file zipped as bootstrap.zip"
             echo "Uploading to AWS S3"
             aws s3 cp "$result.zip" "s3://$S3_BUCKET_NAME/$result.zip"
