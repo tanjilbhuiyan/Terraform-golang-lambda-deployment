@@ -24,8 +24,6 @@ jobs:
     - name: Setup Golang
       id: setup_golang
       uses: actions/setup-go@v5.0.0
-      with:
-            go-version: '1.20'
       # Set up the Go environment
 
     - name: action-zip
