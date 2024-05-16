@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "builds" {
-  bucket = "my-unique-bucket-golang-lambda-test-Ran@2021"
+  bucket = "my-unique-bucket-golang-lambda-test"
 }
 
 # Define ownership controls for the bucket
