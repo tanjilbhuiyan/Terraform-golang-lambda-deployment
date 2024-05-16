@@ -21,35 +21,35 @@ jobs:
         fetch-depth: 0
       # Checkout the source code from the repository
 
-    # - name: Setup Golang
-    #   id: setup_golang
-    #   uses: actions/setup-go@v5.0.0
-    #   with:
-    #         go-version: '1.20'
-    #   # Set up the Go environment
+    - name: Setup Golang
+      id: setup_golang
+      uses: actions/setup-go@v5.0.0
+      with:
+            go-version: '1.20'
+      # Set up the Go environment
 
-    # - name: action-zip
-    #   uses: montudor/action-zip@v1.0.0
-    #   # Zip the source code
+    - name: action-zip
+      uses: montudor/action-zip@v1.0.0
+      # Zip the source code
 
-    # - name: Setting up change file detection action
-    #   id: changed-files-specific
-    #   uses: tj-actions/changed-files@v42.0.2
-    #   with:
-    #     base_sha: ${{ steps.get-base-sha.outputs.base_sha }}
-    #     files: |
-    #       **/*.go
-    #     json: "true"
-    #   # Detect any changes in the Go files
+    - name: Setting up change file detection action
+      id: changed-files-specific
+      uses: tj-actions/changed-files@v44
+      with:
+        base_sha: ${{ steps.get-base-sha.outputs.base_sha }}
+        files: |
+          **/*.go
+        json: "true"
+      # Detect any changes in the Go files
 
-    # - name: Run step if any file(s) in the integration folder change
-    #   if: steps.changed-files-specific.outputs.any_changed == 'true'
-    #   run: |
-    #     echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
-    #     echo "${{ steps.changed-files-specific.outputs.all_changed_files }}" > list.txt
-    #     cp ../.github/scripts/golang-build-deploy.sh .
-    #     bash golang-build-deploy.sh
-    #   # Execute build and deploy script if any Go files have changed
+    - name: Run step if any file(s) in the integration folder change
+      if: steps.changed-files-specific.outputs.any_changed == 'true'
+      run: |
+        echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
+        echo "${{ steps.changed-files-specific.outputs.all_changed_files }}" > list.txt
+        cp ../.github/scripts/golang-build-deploy.sh .
+        bash golang-build-deploy.sh
+      # Execute build and deploy script if any Go files have changed
 
     - name: Setup Terraform
       id: Setting_up_terraform
